@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jesus Iriarte · Editor de video</title>
+<style>
+:root{--bg:#fff;--surface:#f5f5f5;--text:#0a0a0a;--muted:#666;--line:#e2e2e2;--accent:#e10600;--accent-text:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--surface:#111;--text:#fff;--muted:#a3a3a3;--line:#262626;--accent:#ff1a14;--accent-text:#fff}}
+:root[data-theme="dark"]{--bg:#000;--surface:#111;--text:#fff;--muted:#a3a3a3;--line:#262626;--accent:#ff1a14;--accent-text:#fff}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav{display:flex;justify-content:space-between;align-items:center;height:60px}
+.logo{font-weight:800;letter-spacing:-.02em;text-decoration:none}
+.logo b{color:var(--accent)}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:14px}
+nav a{text-decoration:none;color:var(--muted)}
+nav a:hover{color:var(--text)}
+.hero{padding:84px 0 64px}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.tag i{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+h1{font-size:clamp(38px,8vw,76px);line-height:1.02;letter-spacing:-.04em;margin:20px 0;max-width:12em}
+h1 em{font-style:normal;color:var(--accent)}
+.lead{font-size:18px;color:var(--muted);max-width:34em;margin:0 0 28px}
+.btn{display:inline-block;padding:12px 22px;border-radius:10px;font-weight:600;text-decoration:none;border:1px solid var(--line);margin:0 8px 8px 0}
+.btn.p{background:var(--accent);color:var(--accent-text);border-color:var(--accent)}
+.stats{display:flex;gap:40px;flex-wrap:wrap;margin-top:44px;padding-top:28px;border-top:1px solid var(--line)}
+.stats b{display:block;font-size:30px;letter-spacing:-.03em}
+.stats span{font-size:13px;color:var(--muted)}
+section{padding:60px 0}
+h2{font-size:clamp(26px,4vw,38px);letter-spacing:-.03em;margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 28px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.filters button{font:inherit;font-size:14px;padding:7px 16px;border-radius:99px;border:1px solid var(--line);background:none;color:var(--muted);cursor:pointer}
+.filters button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;display:block;transition:transform .2s}
+.card:hover{transform:translateY(-4px)}
+.thumb{aspect-ratio:16/9;position:relative;display:grid;place-items:center}
+.play{width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.45);display:grid;place-items:center;color:#fff;font-size:20px;padding-left:4px}
+.dur{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;padding:2px 8px;border-radius:6px}
+.info{padding:14px 16px 16px}
+.info h3{margin:0 0 4px;font-size:17px}
+.info p{margin:0;font-size:14px;color:var(--muted)}
+.cat{font-size:12px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.svc{padding:22px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.svc h3{margin:0 0 6px}
+.svc p{margin:0;color:var(--muted);font-size:15px}
+.tools{display:flex;gap:10px;flex-wrap:wrap}
+.tools span{padding:8px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:14px}
+.contact{text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:56px 20px;margin:20px 0 60px}
+.contact h2{font-size:clamp(28px,5vw,46px)}
+footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:14px;text-align:center}
+@media(max-width:600px){nav ul{gap:14px}.hero{padding:56px 0 40px}}
+#intro{position:fixed;inset:0;z-index:50;background:#000;display:grid;place-items:center;pointer-events:none;animation:out 1.1s cubic-bezier(.8,0,.2,1) 1.5s forwards}
+#intro span{color:#fff;font-weight:800;font-size:clamp(22px,6vw,44px);animation:tx 1s cubic-bezier(.2,.8,.2,1) both}
+#intro b{color:#ff1a14}
+#intro::after{content:"";position:absolute;left:0;bottom:0;height:5px;width:100%;background:#ff1a14;transform-origin:left;animation:bar 1.4s cubic-bezier(.7,0,.2,1) both}
+@keyframes tx{from{opacity:0;letter-spacing:.7em}to{opacity:1;letter-spacing:.18em}}
+@keyframes bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes out{to{transform:translateY(-100%);visibility:hidden}}
+@keyframes up{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+.hero>*{animation:up .9s cubic-bezier(.2,.8,.2,1) both}
+.hero>:nth-child(1){animation-delay:1.9s}.hero>:nth-child(2){animation-delay:2s}.hero>:nth-child(3){animation-delay:2.15s}.hero>:nth-child(4){animation-delay:2.3s}.hero>:nth-child(5){animation-delay:2.35s}.hero>:nth-child(6){animation-delay:2.5s}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+.card{position:relative}
+.card.rv{opacity:1;transform:none;clip-path:none;transition:transform .2s}
+.card.rv:hover{transform:translateY(-4px)}
+.card.rv::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:var(--accent);transform-origin:right;transition:transform .8s cubic-bezier(.7,0,.2,1) var(--d,0s)}
+.card.rv.in::after{transform:scaleX(0)}
+@media(prefers-reduced-motion:reduce){#intro{display:none}.hero>*{animation:none}.rv{opacity:1;transform:none;clip-path:none;transition:none}.card.rv::after{display:none}}
+[data-v]{display:none}[data-v].on{display:block}
+nav li a{display:block;padding:6px 0}
+nav a.act{color:var(--text);box-shadow:0 2px 0 var(--accent)}
+body.ready .hero>*{animation-delay:.05s!important}
+.contact{margin-top:40px}
+
+:root{--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' preserveAspectRatio='none'%3E%3Cpath d='M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z'/%3E%3C/svg%3E")}
+.star,h2::before,#intro::before{background:var(--accent);-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
+h2::before{content:"";display:inline-block;width:.6em;height:.6em;margin-right:.4em;vertical-align:.05em}
+.hero,.contact{position:relative}
+.contact{overflow:hidden}
+.ring{position:absolute;right:2%;top:30px;width:min(44vw,360px);aspect-ratio:1;z-index:-1;pointer-events:none}
+.hero>.ring{animation:spin 50s linear infinite}
+.ring .star{position:absolute;left:50%;top:50%;width:11%;aspect-ratio:3/5;background:var(--text)}
+.ring .star:nth-child(4n+1){background:var(--accent)}
+.hero>.tw{position:absolute;pointer-events:none;animation:tw 3.4s ease-in-out infinite}
+@keyframes tw{0%,100%{transform:scale(.5) rotate(0);opacity:.3}50%{transform:scale(1) rotate(30deg);opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shoot{position:absolute;top:22px;width:70px;height:170px;pointer-events:none}
+.shoot .star{position:absolute;left:0;top:0}
+.shoot.l{left:5%;transform:rotate(-14deg)}
+.shoot.r{right:5%;transform:rotate(14deg) scaleX(-1)}
+#intro::before{content:"";position:absolute;left:calc(50% - 26px);top:calc(50% - 96px);width:52px;height:52px;background:#ff1a14;animation:spin 3s linear infinite}
+@media(max-width:600px){.shoot{display:none}.ring{opacity:.35}}
+@media(prefers-reduced-motion:reduce){.hero>.ring,.hero>.tw{animation:none}}
+.card.vacio{cursor:default}.card.vacio .thumb{filter:grayscale(1) brightness(.7)}.card.vacio .play{display:none}.card.vacio:hover{transform:none}
+nav ul{flex-wrap:wrap;justify-content:flex-end}
+@media(max-width:700px){nav{height:auto;flex-wrap:wrap;padding:10px 0;gap:6px}nav ul{gap:4px 14px;font-size:13px}}
+.cat-block{margin:34px 0 10px}
+.cat-block h2{margin-bottom:12px}
+.reels{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px;margin-top:20px}
+.reel{display:block;text-decoration:none;color:inherit;cursor:pointer;position:relative}
+.reel.vacio{cursor:default}
+.rthumb{aspect-ratio:9/16;border-radius:16px;position:relative;display:grid;place-items:center;overflow:hidden;border:1px solid var(--line);transition:transform .25s,box-shadow .25s}
+.reel:not(.vacio):hover .rthumb{transform:translateY(-4px);box-shadow:0 10px 30px rgba(225,6,0,.25)}
+.rthumb iframe,.rthumb video{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.reel .play{width:62px;height:62px;font-size:22px;background:rgba(225,6,0,.9);box-shadow:0 0 0 8px rgba(225,6,0,.2)}
+.reel.vacio .rthumb{filter:grayscale(1) brightness(.75);background:linear-gradient(160deg,#0a0a0a,#6b0400)}
+.reel.vacio .play,.reel.vacio video{display:none}
+.reel.on .play{display:none}
+.reel .soon{display:none}.reel.vacio .soon{display:block}
+.rthumb video{object-fit:cover}
+.soon{color:#fff;font-size:13px;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.rinfo h3{margin:10px 2px 0;font-size:15px}
+.reel.rv{transform:translateY(24px)}.reel.rv.in{transform:none}
+@media(max-width:600px){.reels{grid-template-columns:repeat(2,1fr);gap:12px}}
+.big{position:absolute;top:8px;right:8px;z-index:3;width:36px;height:36px;border-radius:10px;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:18px;line-height:1;cursor:pointer;display:grid;place-items:center;transition:background .2s,transform .2s}
+.big:hover{background:var(--accent);transform:scale(1.08)}
+.reel.vacio .big{display:none}
+#lb{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:16px}
+#lb.open{display:flex;animation:lbin .3s ease}
+@keyframes lbin{from{opacity:0}to{opacity:1}}
+.lbbox{display:flex;flex-direction:column;gap:10px;height:100%;max-height:100%;align-items:center;justify-content:center;width:100%}
+.lbbar{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#fff;width:min(100%,calc((100vh - 90px)*9/16 + 120px));font-weight:600}
+.lbbar button{font:inherit;font-size:14px;color:#fff;background:rgba(255,255,255,.14);border:0;border-radius:10px;padding:8px 14px;margin-left:8px;cursor:pointer}
+.lbbar button:hover{background:var(--accent)}
+#lbv{height:calc(100vh - 90px);max-width:100%;aspect-ratio:9/16;background:#000;border-radius:14px;object-fit:contain}
+.btn.cta{position:relative;display:inline-flex;align-items:center;gap:12px;padding:16px 30px;font-size:17px;font-weight:700;letter-spacing:.02em;border-radius:99px;overflow:hidden;box-shadow:0 0 0 0 rgba(225,6,0,.55),0 10px 28px rgba(225,6,0,.35);animation:ctap 2.4s ease-out infinite;transition:transform .2s,box-shadow .2s}
+.btn.cta i{font-style:normal;font-size:20px;transition:transform .25s}
+.btn.cta::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:ctas 3.2s ease-in-out infinite}
+.btn.cta:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 0 0 0 rgba(225,6,0,0),0 16px 36px rgba(225,6,0,.5)}
+.btn.cta:hover i{transform:translateX(6px)}
+.btn.cta:active{transform:scale(.97)}
+@keyframes ctap{0%{box-shadow:0 0 0 0 rgba(225,6,0,.55),0 10px 28px rgba(225,6,0,.35)}70%,100%{box-shadow:0 0 0 18px rgba(225,6,0,0),0 10px 28px rgba(225,6,0,.35)}}
+@keyframes ctas{0%,55%{left:-70%}100%{left:130%}}
+@media(prefers-reduced-motion:reduce){.btn.cta,.btn.cta::after{animation:none}}
+</style>
+</head>
+<body>
+<div id="intro"><span>JESUS IRIARTE<b>.</b></span></div>
+<header><div class="wrap"><nav>
+<a class="logo" href="#inicio">JESUS IRIARTE<b>.</b></a>
+<ul><li><a href="#inicio">Inicio</a></li><li><a href="#contacto">Contacto</a></li></ul>
+</nav></div></header>
+
+<main>
+<div class="wrap">
+<div class="hero" data-v="inicio">
+<span class="tag"><i></i> Disponible para nuevos proyectos</span>
+<h1>Video y diseño que <em>se quedan</em> en la mente.</h1>
+<p class="lead">Soy Jesus Iriarte, editor de video. Edito reels y videos para YouTube y redes sociales con Premiere Pro, y los complemento con After Effects, Photoshop e Illustrator.</p>
+<a class="btn p cta" href="#trabajos"><span>Ver mi trabajo</span><i aria-hidden="true">→</i></a><a class="btn" href="#contacto">Contactar</a>
+<div class="stats">
+<div><b>1 año</b><span>De experiencia</span></div>
+<div><b>4</b><span>Programas de Adobe</span></div>
+
+</div>
+</div>
+
+
+<section data-v="inicio">
+<h2>Servicios</h2>
+<p class="sub">Todo el proceso de postproducción en un solo lugar.</p>
+<div class="services">
+<div class="svc"><h3>Edición y montaje</h3><p>Cortes con ritmo, narrativa clara y transiciones limpias.</p></div>
+
+<div class="svc"><h3>Motion graphics</h3><p>Animaciones y efectos con After Effects.</p></div>
+
+<div class="svc"><h3>Reels y contenido corto</h3><p>Videos verticales pensados para redes sociales.</p></div>
+</div>
+</section>
+
+<section data-v="inicio">
+<h2>Herramientas</h2>
+<p class="sub">Con lo que trabajo todos los días.</p>
+<div class="tools"><span>Premiere Pro</span><span>After Effects</span><span>Photoshop</span><span>Illustrator</span></div>
+</section>
+
+<div class="contact" data-v="contacto">
+<h2>¿Trabajamos juntos?</h2>
+<p class="lead" style="margin:0 auto 24px">Cuéntame de tu proyecto y te respondo en menos de 24 horas.</p>
+<a class="btn p" href="https://mail.google.com/mail/?view=cm&amp;to=jesus.iriarte20mx@gmail.com" target="_blank" rel="noopener">jesus.iriarte20mx@gmail.com</a>
+<a class="btn" href="https://wa.me/526674299670" target="_blank" rel="noopener">WhatsApp</a>
+<a class="btn" href="https://www.instagram.com/freddy.f.x/" target="_blank" rel="noopener">Instagram @freddy.f.x</a>
+</div>
+</div>
+</main>
+<footer><div class="wrap">© 2026 Jesus Iriarte · Editor de video · <a href="https://www.instagram.com/freddy.f.x/" target="_blank" rel="noopener">@freddy.f.x</a></div></footer>
+
+<script>
+// ================= COMO AGREGAR TUS VIDEOS =================
+// 1) Guarda tus reels (en formato .mp4) dentro de la carpeta "videos", con estos nombres:
+//    motion-1.mp4 ... motion-4.mp4   |   edicion-1.mp4 ... edicion-5.mp4   |   narrativo-1.mp4 ... narrativo-4.mp4
+// 2) Listo: la portada se toma sola del video y se reproduce al darle al boton.
+// Los espacios sin video se ven como "Proximamente". Para cambiar el nombre que se muestra, edita "titulos".
+var categorias=[
+{id:"motion",titulo:"Motion Graphics y Efectos Avanzados",carpeta:"https://drive.google.com/drive/folders/1Rkdb6QjKMV0Oa2wKEeJGH6AgytsnZQot?usp=sharing",cantidad:4,titulos:[]},
+{id:"edicion",titulo:"Edición Dinámica y Efectos Visuales",carpeta:"https://drive.google.com/drive/folders/1faC_rDgfSj2sZ04PJnK4DgpYU-He-kIC?usp=sharing",cantidad:5,titulos:[]},
+{id:"narrativo",titulo:"Contenido Narrativo y Promocional",carpeta:"https://drive.google.com/drive/folders/1LKur7M2wPLF6cKUrVSw9P6XeAsxj08rL?usp=sharing",cantidad:4,titulos:[]}
+];
+// ================= FIN =================
+(function(){
+var c=document.querySelector(".contact"),nav=document.querySelector("nav ul"),last=nav.querySelector("li:last-child");
+var li=document.createElement("li");li.innerHTML='<a href="#trabajos">Trabajos</a>';nav.insertBefore(li,last);
+var sec=document.createElement("section");sec.setAttribute("data-v","trabajos");
+var h='<h1 style="font-size:clamp(30px,6vw,52px);margin:0 0 6px">Mis trabajos</h1><p class="sub">Toca ▶ para ver cada reel.</p>';
+categorias.forEach(function(k){
+ var cards="";
+ for(var n=1;n<=k.cantidad;n++){
+  var t=k.titulos[n-1]||"Video "+n;
+  cards+='<div class="reel vacio"><div class="rthumb"><video preload="metadata" playsinline muted src="videos/'+k.id+'-'+n+'.mp4#t=0.1"></video><span class="play">▶</span><span class="soon">Próximamente</span><button type="button" class="big" aria-label="Ver más grande" title="Ver más grande">⤢</button></div><div class="rinfo"><h3>'+t+'</h3></div></div>'}
+ h+='<div class="cat-block"><h2>'+k.titulo+'</h2><div class="reels">'+cards+'</div></div>'});
+sec.innerHTML=h;c.before(sec);
+var lb=document.createElement("div");lb.id="lb";lb.innerHTML='<div class="lbbox"><div class="lbbar"><span id="lbt"></span><span><button type="button" id="lbfs">Pantalla completa</button><button type="button" id="lbx" aria-label="Cerrar">✕</button></span></div><video id="lbv" controls playsinline></video></div>';document.body.appendChild(lb);
+var lbv=lb.querySelector("#lbv");
+function openLB(src,t){lbv.src=src;lb.querySelector("#lbt").textContent=t;lb.classList.add("open");document.body.style.overflow="hidden";lbv.play()}
+function closeLB(){lbv.pause();lbv.removeAttribute("src");lbv.load();lb.classList.remove("open");document.body.style.overflow=""}
+lb.addEventListener("click",function(e){if(e.target===lb)closeLB()});
+lb.querySelector("#lbx").addEventListener("click",closeLB);
+lb.querySelector("#lbfs").addEventListener("click",function(){var f=lbv.requestFullscreen||lbv.webkitRequestFullscreen||lbv.webkitEnterFullscreen;if(f)f.call(lbv)});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&lb.classList.contains("open"))closeLB()});
+window.addEventListener("hashchange",function(){if(lb.classList.contains("open"))closeLB()});
+sec.querySelectorAll(".reel").forEach(function(r){
+ var v=r.querySelector("video"),playing=false;
+ v.addEventListener("loadeddata",function(){r.classList.remove("vacio")});
+ v.addEventListener("error",function(){r.classList.add("vacio")});
+ function go(){if(r.classList.contains("vacio"))return;
+  sec.querySelectorAll("video").forEach(function(o){if(o!==v&&!o.paused)o.pause()});
+  v.muted=false;v.controls=true;r.classList.add("on");v.play()}
+ r.addEventListener("click",function(e){if(!r.classList.contains("on"))go()});
+ r.querySelector(".big").addEventListener("click",function(e){e.stopPropagation();if(r.classList.contains("vacio"))return;v.pause();openLB(v.getAttribute("src").split("#")[0],r.querySelector("h3").textContent||"")});
+ v.addEventListener("pause",function(){});
+});
+})();
+</script>
+<script>
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:0,rootMargin:"0px 0px -6% 0px"});
+function rv(sel){document.querySelectorAll(sel).forEach(function(el,i){if(el.dataset.r)return;el.dataset.r=1;el.classList.add("rv");var d=(i%4)*.1+"s";if(el.classList.contains("card"))el.style.setProperty("--d",d);else el.style.transitionDelay=d;io.observe(el)})}
+rv("h2,.sub,.filters,.svc,.tools,.contact,.cat-block .btn");rv(".card,.reel");
+var views=["inicio","trabajos","contacto"];
+function route(){var h=location.hash.slice(1);if(views.indexOf(h)<0)h="inicio";
+document.querySelectorAll("[data-v]").forEach(function(el){var on=el.getAttribute("data-v")===h;el.classList.toggle("on",on);if(on){var s=Array.prototype.slice.call(el.querySelectorAll(".rv"));if(el.classList.contains("rv"))s.push(el);s.forEach(function(x){x.classList.remove("in");io.observe(x)})}});
+document.querySelectorAll("nav a").forEach(function(a){a.classList.toggle("act",a.getAttribute("href")==="#"+h)});
+window.scrollTo(0,0)}
+window.addEventListener("hashchange",route);route();
+setTimeout(function(){document.body.classList.add("ready")},4000);
+(function(){var h=document.querySelector(".hero"),o="";[0,45,90,135,180,225,270,315].forEach(function(d){o+='<i class="star" style="transform:translate(-50%,-50%) rotate('+d+'deg) translateY(-230%) scale('+(d%90?.7:1)+')"></i>'});
+var r=document.createElement("div");r.className="ring";r.innerHTML=o;h.appendChild(r);
+[[8,16,18],[52,5,12],[64,78,16],[30,90,10]].forEach(function(p,i){var t=document.createElement("i");t.className="star tw";t.style.cssText="left:"+p[0]+"%;top:"+p[1]+"%;width:"+p[2]+"px;height:"+p[2]+"px;animation-delay:"+(i*.7)+"s";h.appendChild(t)});
+var big='<i class="star" style="width:34px;height:150px"></i><i class="star" style="width:20px;height:88px;left:42px;top:76px"></i>';
+document.querySelector(".contact").insertAdjacentHTML("afterbegin",'<span class="shoot l">'+big+'</span><span class="shoot r">'+big+'</span>')})();
+</script>
+</body>
+</html>
