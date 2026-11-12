@@ -142,9 +142,54 @@ nav ul{flex-wrap:wrap;justify-content:flex-end}
 @keyframes ctap{0%{box-shadow:0 0 0 0 rgba(225,6,0,.55),0 10px 28px rgba(225,6,0,.35)}70%,100%{box-shadow:0 0 0 18px rgba(225,6,0,0),0 10px 28px rgba(225,6,0,.35)}}
 @keyframes ctas{0%,55%{left:-70%}100%{left:130%}}
 @media(prefers-reduced-motion:reduce){.btn.cta,.btn.cta::after{animation:none}}
+
+
+::selection{background:transparent;color:#14110f}
+::-moz-selection{background:transparent;color:#14110f}
+h1 em::selection{color:#e10600}
+.contact ::selection,.contact::selection,.reel ::selection,.svc ::selection,.tools ::selection,.btn::selection,.btn ::selection{background:#ece8e0;color:#14110f}
+#selfx{position:absolute;top:0;left:0;width:0;height:0;z-index:-1;pointer-events:none}
+.selp{position:absolute;background:#e6e0d3;filter:url(#tornSel)}
+nav a.logo,nav a.logo.act{box-shadow:none}
+#intro span{display:inline-block;color:#fff;letter-spacing:.18em;-webkit-mask:linear-gradient(90deg,#000 35%,transparent 65%) 100% 0/300% 100% no-repeat;mask:linear-gradient(90deg,#000 35%,transparent 65%) 100% 0/300% 100% no-repeat;text-shadow:0 0 30px #fff,0 0 8px #fff;animation:rev 1.5s cubic-bezier(.55,0,.2,1) .2s forwards,glw 2s ease-out .2s forwards}
+@keyframes rev{to{-webkit-mask-position:0 0;mask-position:0 0}}
+@keyframes glw{0%{text-shadow:0 0 34px #fff,0 0 10px #fff}60%{text-shadow:0 0 22px rgba(255,255,255,.7),0 0 6px #fff}100%{text-shadow:0 0 0 transparent}}
+#intro{animation-delay:1.9s!important}
+@media(prefers-reduced-motion:reduce){#intro span{-webkit-mask:none;mask:none;animation:none;text-shadow:none}}
+
+html,body{overflow-x:clip}
+.mq{position:relative;width:100vw;margin-left:calc(50% - 50vw);overflow:hidden;padding:18px 0;clip-path:polygon(0% 4.1%,2.5% 5.0%,5% 8.3%,7.5% 4.2%,10% 4.6%,12.5% 5.3%,15% 1.7%,17.5% 4.6%,20% 5.7%,22.5% 7.1%,25% 0.8%,27.5% 2.7%,30% 0.8%,32.5% 7.3%,35% 6.2%,37.5% 0.4%,40% 8.8%,42.5% 8.7%,45% 5.9%,47.5% 5.5%,50% 1.4%,52.5% 0.1%,55% 4.8%,57.5% 0.5%,60% 1.7%,62.5% 2.2%,65% 0.3%,67.5% 4.2%,70% 4.0%,72.5% 7.6%,75% 4.7%,77.5% 5.8%,80% 4.5%,82.5% 6.0%,85% 4.1%,87.5% 2.5%,90% 9.0%,92.5% 9.0%,95% 7.6%,97.5% 6.4%,100% 2.8%,100% 93.1%,97.5% 93.6%,95% 91.6%,92.5% 97.9%,90% 94.6%,87.5% 98.6%,85% 94.5%,82.5% 99.6%,80% 98.6%,77.5% 91.0%,75% 92.9%,72.5% 99.2%,70% 95.2%,67.5% 99.8%,65% 94.6%,62.5% 91.7%,60% 96.7%,57.5% 98.0%,55% 93.4%,52.5% 91.8%,50% 94.0%,47.5% 99.7%,45% 97.8%,42.5% 92.1%,40% 93.2%,37.5% 91.9%,35% 91.5%,32.5% 98.2%,30% 92.6%,27.5% 96.0%,25% 95.0%,22.5% 92.7%,20% 97.6%,17.5% 92.2%,15% 96.8%,12.5% 92.0%,10% 94.8%,7.5% 92.9%,5% 93.4%,2.5% 99.7%,0% 98.2%);user-select:none;-webkit-user-select:none}
+.mq.red{background:var(--accent);color:#fff;text-shadow:0 0 10px rgba(255,255,255,.95),0 0 26px rgba(255,255,255,.55);margin-top:34px;margin-bottom:10px}
+.mq.dark{background:var(--text);color:var(--bg);text-shadow:0 0 12px var(--accent),0 0 26px var(--accent);padding:12px 0;margin-top:30px;margin-bottom:12px}
+.mqt{display:flex;width:max-content;animation:mqs var(--sp,32s) linear infinite}
+.mq.r .mqt{animation-direction:reverse}
+.mqt span{display:block;white-space:nowrap;font-weight:900;text-transform:uppercase;letter-spacing:.07em;padding-right:.5em;line-height:1.1}
+.mq.red .mqt span{font-size:clamp(26px,5.2vw,54px)}
+.mq.dark .mqt span{font-size:clamp(18px,3.2vw,30px)}
+.mq .st{color:inherit;display:inline-block;margin:0 .45em;font-style:normal;transform:translateY(-.04em)}
+.mq.dark .st{color:var(--accent);text-shadow:none}
+@keyframes mqs{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.mqt{animation:none}}
+.mini{font-size:clamp(17px,2.4vw,22px);margin:30px 0 0;letter-spacing:-.01em}
+.mini+.mq{margin-top:10px}
+.mq.red{margin-top:34px}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<filter id="tornSel" x="-6%" y="-40%" width="112%" height="180%" color-interpolation-filters="sRGB">
+<feTurbulence type="fractalNoise" baseFrequency="0.05 0.08" numOctaves="3" seed="6" result="n1"/>
+<feDisplacementMap in="SourceGraphic" in2="n1" scale="9" xChannelSelector="R" yChannelSelector="G" result="d"/>
+<feMorphology in="d" operator="dilate" radius="1.6" result="o"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.12" numOctaves="2" seed="3" result="n2"/>
+<feDisplacementMap in="o" in2="n2" scale="5" xChannelSelector="G" yChannelSelector="R" result="o2"/>
+<feFlood flood-color="#ffffff" result="fl"/>
+<feComposite in="fl" in2="o2" operator="in" result="edge"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="2" result="g"/>
+<feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.1 .5" result="ga"/>
+<feComposite in="ga" in2="d" operator="in" result="grain"/>
+<feMerge><feMergeNode in="edge"/><feMergeNode in="d"/><feMergeNode in="grain"/></feMerge>
+</filter></defs></svg>
 <div id="intro"><span>JESUS IRIARTE<b>.</b></span></div>
 <header><div class="wrap"><nav>
 <a class="logo" href="#inicio">JESUS IRIARTE<b>.</b></a>
@@ -167,7 +212,6 @@ nav ul{flex-wrap:wrap;justify-content:flex-end}
 
 
 <section data-v="inicio">
-<h2>Servicios</h2>
 <p class="sub">Todo el proceso de postproducción en un solo lugar.</p>
 <div class="services">
 <div class="svc"><h3>Edición y montaje</h3><p>Cortes con ritmo, narrativa clara y transiciones limpias.</p></div>
@@ -179,7 +223,6 @@ nav ul{flex-wrap:wrap;justify-content:flex-end}
 </section>
 
 <section data-v="inicio">
-<h2>Herramientas</h2>
 <p class="sub">Con lo que trabajo todos los días.</p>
 <div class="tools"><span>Premiere Pro</span><span>After Effects</span><span>Photoshop</span><span>Illustrator</span></div>
 </section>
@@ -207,18 +250,25 @@ var categorias=[
 {id:"narrativo",titulo:"Contenido Narrativo y Promocional",carpeta:"https://drive.google.com/drive/folders/1LKur7M2wPLF6cKUrVSw9P6XeAsxj08rL?usp=sharing",cantidad:4,titulos:[]}
 ];
 // ================= FIN =================
+function mq(txt,v,dir,sp){var p=txt.split("|").join('<i class="st">✦</i>')+'<i class="st">✦</i>';var n=Math.max(1,Math.ceil(90/txt.length));var g=new Array(n+1).join(p);
+return '<div class="mq '+v+(dir==="r"?' r':'')+'" style="--sp:'+(sp||32)+'s" aria-label="'+txt.split("|").join(", ")+'"><div class="mqt" aria-hidden="true"><span>'+g+'</span><span>'+g+'</span></div></div>'}
 (function(){
 var c=document.querySelector(".contact"),nav=document.querySelector("nav ul"),last=nav.querySelector("li:last-child");
 var li=document.createElement("li");li.innerHTML='<a href="#trabajos">Trabajos</a>';nav.insertBefore(li,last);
 var sec=document.createElement("section");sec.setAttribute("data-v","trabajos");
-var h='<h1 style="font-size:clamp(30px,6vw,52px);margin:0 0 6px">Mis trabajos</h1><p class="sub">Toca ▶ para ver cada reel.</p>';
+var h='<p class="sub">Toca ▶ para ver cada reel.</p>';
 categorias.forEach(function(k){
  var cards="";
  for(var n=1;n<=k.cantidad;n++){
   var t=k.titulos[n-1]||"Video "+n;
   cards+='<div class="reel vacio"><div class="rthumb"><video preload="metadata" playsinline muted src="videos/'+k.id+'-'+n+'.mp4#t=0.1"></video><span class="play">▶</span><span class="soon">Próximamente</span><button type="button" class="big" aria-label="Ver más grande" title="Ver más grande">⤢</button></div><div class="rinfo"><h3>'+t+'</h3></div></div>'}
- h+='<div class="cat-block"><h2>'+k.titulo+'</h2><div class="reels">'+cards+'</div></div>'});
-sec.innerHTML=h;c.before(sec);
+ h+='<div class="cat-block"><h2 class="mini">'+k.titulo+'</h2>'+mq(k.titulo,'dark',k.id==='edicion'?'l':'r',26)+'<div class="reels">'+cards+'</div></div>'});
+sec.innerHTML='<h2 class="mini">Mis trabajos</h2>'+mq('Mis trabajos|Reels|Motion graphics|Edición dinámica|Contenido narrativo','red','l',30)+h;c.before(sec);
+c.insertAdjacentHTML('beforebegin','<h2 class="mini" data-v="contacto">Contacto</h2>'+mq('Contacto|Hablemos|Trabajemos juntos','red','r',28).replace('class="mq','data-v="contacto" class="mq'));
+var secs=document.querySelectorAll('section[data-v="inicio"]');
+if(secs[0])secs[0].insertAdjacentHTML('afterbegin','<h2 class="mini">Servicios</h2>'+mq('Servicios|Edición y montaje|Motion graphics|Reels','dark','r',24));
+if(secs[1])secs[1].insertAdjacentHTML('afterbegin','<h2 class="mini">Herramientas</h2>'+mq('Herramientas|Premiere Pro|After Effects|Photoshop|Illustrator','dark','l',26));
+var hero=document.querySelector('.hero');hero.insertAdjacentHTML('afterend',mq('Jesus Iriarte|Editor de video|Motion Graphics|Reels y contenido corto','red','l',34).replace('class="mq','data-v="inicio" class="mq'));
 var lb=document.createElement("div");lb.id="lb";lb.innerHTML='<div class="lbbox"><div class="lbbar"><span id="lbt"></span><span><button type="button" id="lbfs">Pantalla completa</button><button type="button" id="lbx" aria-label="Cerrar">✕</button></span></div><video id="lbv" controls playsinline></video></div>';document.body.appendChild(lb);
 var lbv=lb.querySelector("#lbv");
 function openLB(src,t){lbv.src=src;lb.querySelector("#lbt").textContent=t;lb.classList.add("open");document.body.style.overflow="hidden";lbv.play()}
@@ -257,6 +307,20 @@ var r=document.createElement("div");r.className="ring";r.innerHTML=o;h.appendChi
 [[8,16,18],[52,5,12],[64,78,16],[30,90,10]].forEach(function(p,i){var t=document.createElement("i");t.className="star tw";t.style.cssText="left:"+p[0]+"%;top:"+p[1]+"%;width:"+p[2]+"px;height:"+p[2]+"px;animation-delay:"+(i*.7)+"s";h.appendChild(t)});
 var big='<i class="star" style="width:34px;height:150px"></i><i class="star" style="width:20px;height:88px;left:42px;top:76px"></i>';
 document.querySelector(".contact").insertAdjacentHTML("afterbegin",'<span class="shoot l">'+big+'</span><span class="shoot r">'+big+'</span>')})();
+</script>
+<script>
+(function(){
+var layer=document.createElement("div");layer.id="selfx";document.body.appendChild(layer);var raf=0;
+function draw(){raf=0;var sel=window.getSelection();layer.innerHTML="";if(!sel||sel.isCollapsed||!sel.rangeCount)return;
+var f=document.createDocumentFragment(),sx=window.pageXOffset,sy=window.pageYOffset;
+for(var i=0;i<sel.rangeCount;i++){var rs=sel.getRangeAt(i).getClientRects();
+for(var j=0;j<rs.length;j++){var r=rs[j];if(r.width<3||r.height<3)continue;
+var d=document.createElement("div");d.className="selp";
+d.style.cssText="left:"+(r.left+sx-3)+"px;top:"+(r.top+sy-1)+"px;width:"+(r.width+6)+"px;height:"+(r.height+2)+"px";f.appendChild(d)}}
+layer.appendChild(f)}
+function q(){if(!raf)raf=requestAnimationFrame(draw)}
+document.addEventListener("selectionchange",q);window.addEventListener("resize",q);window.addEventListener("scroll",q,{passive:true});
+})();
 </script>
 </body>
 </html>
